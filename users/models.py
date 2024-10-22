@@ -7,3 +7,7 @@ class PlayerProfile(models.Model):
     position = models.CharField(max_length=100, blank=True)
     experience = models.IntegerField(default=0)
     bio = models.TextField(blank=True, null=True)
+
+class CoachProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    years_experience = models.IntegerField(default=0)
