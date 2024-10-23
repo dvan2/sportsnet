@@ -5,13 +5,13 @@ class User(AbstractUser):
     def __str__(self):
         return f'{self.username}'
 
+class Profile(models.Model):
+    USER_ROLES = [
+        ('player', 'Player'),
+        ('coach', 'Coach')
+    ]
 
-class PlayerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    position = models.CharField(max_length=100, blank=True)
-    experience = models.IntegerField(default=0)
+    role = models.CharField(max_length=10, choices=USER_ROLES)
+
     bio = models.TextField(blank=True, null=True)
-
-class CoachProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    years_experience = models.IntegerField(default=0)

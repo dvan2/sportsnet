@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from users.models import User, PlayerProfile, CoachProfile
+from users.models import User
 
 def index(request):
     return render(request, "users/index.html")
