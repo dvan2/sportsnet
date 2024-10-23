@@ -24,7 +24,7 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return redirect('login')
+            return redirect('index')
         else:
             return render(request, "users/login.html", {
                 "message": "Invalid username and/or password."
@@ -46,7 +46,7 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "network/register.html", {
+            return render(request, "users/register.html", {
                 "message": "Passwords must match."
             })
 
@@ -55,7 +55,7 @@ def register(request):
             user = User.objects.create_user(username, email, password)
             user.save()
         except IntegrityError:
-            return render(request, "network/register.html", {
+            return render(request, "users/register.html", {
                 "message": "Username already taken."
             })
         login(request, user)
