@@ -34,6 +34,11 @@
       <a class="navbar-brand" href="#">SportsNet</a>
       <div>
         <ul class="navbar-nav mr-auto">
+          {% if role == "coach" %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'manage_team' %}">Team</a>
+            {% endif %}
+          </li>
           {% if user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">Logout</a>

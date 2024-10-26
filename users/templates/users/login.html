@@ -1,33 +1,30 @@
 {% extends "layout.html" %} {% block body %}
 
-<h2>Login</h2>
+<div class="container">
+  <h2>Login</h2>
 
-{% if message %}
-<div>{{ message }}</div>
-{% endif %}
+  {% if message %}
+  <div>{{ message }}</div>
+  {% endif %}
+  <form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" class="form-control" id="username" name="username" />
+    </div>
+    <div>
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        name="password"
+      />
+    </div>
 
-<form action="{% url 'login' %}" method="post">
-  {% csrf_token %}
-  <div class="form-group">
-    <input
-      autofocus
-      class="form-control"
-      type="text"
-      name="username"
-      placeholder="Username"
-    />
-  </div>
-  <div class="form-group">
-    <input
-      class="form-control"
-      type="password"
-      name="password"
-      placeholder="Password"
-    />
-  </div>
-  <input class="btn btn-primary" type="submit" value="Login" />
-</form>
-
-Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+    <input class="btn btn-primary mt-3" type="submit" value="Login" />
+  </form>
+  Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+</div>
 
 {% endblock %}

@@ -3,13 +3,15 @@ from django.db import IntegrityError
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from users.models import User
+from users.models import User, Profile
 
 def index(request):
-    return render(request, "users/index.html")
+    role = "Guest" if not request.user.is_authenticated else request.user.profile.role
+    return render(request, "users/index.html", {"role": role})
 
 # Create your views here.
 @csrf_exempt
@@ -54,6 +56,9 @@ def register(request):
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
+
+            role = request.POST.get("role", "player")
+            Profile.objects.create(user=user, role=role)
         except IntegrityError:
             return render(request, "users/register.html", {
                 "message": "Username already taken."
