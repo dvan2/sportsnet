@@ -1,3 +1,16 @@
 {% extends "layout.html" %} {% block body %}
-<h1>Hello {{ user }} Let's create a team</h1>
+<div class="container">
+  <h2>Hello {{ user }} Let's create a team</h2>
+  {% if message %}
+  <div>{{ message }}</div>
+  {% endif %}
+  <form action="{% url 'create_team' %}" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="name" class="form-label">Team Name</label>
+      <input type="text" class="form-control" id="name" name="name" />
+    </div>
+    <input class="btn btn-primary mt-3" type="submit" value="Create" />
+  </form>
+</div>
 {% endblock %}
