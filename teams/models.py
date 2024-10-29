@@ -12,9 +12,18 @@ class Team(models.Model):
         return self.name
 
 class Membership(models.Model):
+    PENDING= "P"
+    APPROVED = "A"
+    REJECTED = "R"
+    STATUS_CHOICES = [
+        (PENDING, 'Pending'),
+        (APPROVED, 'Approved'),
+        (REJECTED, 'Rejected'),
+    ]
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="members")
     player = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     joined_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=PENDING)
 
     def __str__(self):
         return f"{self.player.username} - {self.team.name}"

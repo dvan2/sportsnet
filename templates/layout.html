@@ -38,6 +38,11 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'manage_team' %}">Team</a>
           </li>
+          <li class="nav-itema">
+            <a class="nav-link" href="{% url 'pending_requests' %}"
+              >Pending Members</a
+            >
+          </li>
           {% endif %} {% if role == "player" %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'team_list' %}">Team</a>

@@ -1,8 +1,8 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from .models import Team
+from .models import Team, Membership
 
 # Create your views here.
 @login_required
@@ -41,3 +41,38 @@ def create_team(request):
 def team_list(request):
     teams = Team.objects.all()
     return render(request, "teams/team_list.html", {"teams" : teams})
+
+@login_required
+def join_team(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+    membership, created = Membership.objects.get_or_create(team=team, player=request.user, defaults={"status": Membership.PENDING})
+
+    if not created:
+        messages.info(request, "You have already request to join this team")
+    else:
+        messages.success(request, "Join request sent")
+    
+    return redirect('team_list')
+
+@login_required
+def manage_requests(request):
+    coach_team = request.user.team
+    pending_requests = coach_team.members.filter(status=Membership.PENDING)
+    return render(request, "teams/manage_requests.html", {"pending_requests": pending_requests})
+
+@login_required
+def approve_request(request, membership_id):
+    # ensure it's the team's coach
+    membership = get_object_or_404(Membership, id=membership_id, team__coach=request.user)
+    membership.status = Membership.APPROVED
+    membership.save()
+    messages.success(request, "Approved Request")
+    return redirect('pending_requests')
+
+@login_required
+def reject_request(request, membership_id):
+    membership = get_object_or_404(Membership, id=membership_id, team__coach=request.user)
+    membership.status = Membership.APPROVED
+    membership.save()
+    messages.success(request, "Rejected Request")
+    return redirect('pending_requests')
