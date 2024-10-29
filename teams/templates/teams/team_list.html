@@ -1,0 +1,13 @@
+{% extends "layout.html" %} {% block body %}
+<h2>Available Teams</h2>
+<ul>
+  {% for team in teams %}
+  <li>
+    <strong>{{ team.name }} - {{ team.description }} </strong>
+    {% if user.is_authenticated %}
+    <a href="{% url 'join_team team.id %'}">Request to Join</a>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

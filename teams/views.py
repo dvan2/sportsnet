@@ -36,3 +36,8 @@ def create_team(request):
         else:
             messages.error(request, "Please enter a team name.")
     return render(request, "teams/create_team.html")
+
+@login_required
+def team_list(request):
+    teams = Team.objects.all()
+    return render(request, "teams/team_list.html", {"teams" : teams})

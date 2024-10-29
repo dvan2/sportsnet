@@ -37,9 +37,12 @@
           {% if role == "coach" %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'manage_team' %}">Team</a>
-            {% endif %}
           </li>
-          {% if user.is_authenticated %}
+          {% endif %} {% if role == "player" %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'team_list' %}">Team</a>
+          </li>
+          {% endif %} {% if user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
           </li>
