@@ -1,8 +1,5 @@
 <!-- prettier-ignore -->
-{% extends "layout.html" %} {% block body %} {% if messages %} 
-{% for message in messages %}
-<div>{{ message }}</div>
-{% endfor %} {% endif %}
+{% extends "layout.html" %} {% block body %}
 <h2>Manage join Requests</h2>
 <ul>
   {% for request in pending_requests %}

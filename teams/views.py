@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from .models import Team, Membership
 
@@ -13,7 +14,8 @@ def manage_team(request):
     team = Team.objects.filter(coach=request.user).first()
 
     if team:
-        return render(request, "teams/manage.html")
+        players = team.members.filter(status=Membership.APPROVED)
+        return render(request, "teams/manage.html", {"team": team, "players": players})
     else:
         return render(request, "teams/create_team.html")
 
@@ -39,7 +41,9 @@ def create_team(request):
 
 @login_required
 def team_list(request):
-    teams = Team.objects.all()
+    # Only display teams player is not in
+    joined_teams = Team.objects.filter(members__player=request.user)
+    teams = Team.objects.exclude(Q(coach=request.user) | Q(id__in=joined_teams))
     return render(request, "teams/team_list.html", {"teams" : teams})
 
 @login_required

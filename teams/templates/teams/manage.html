@@ -1,3 +1,10 @@
 {% extends "layout.html" %} {% block body %}
-<h1>Hello {{ user }}. Lets manage a team.</h1>
+<h2>{{ team.name }} - Team Members</h2>
+<ul>
+  {% for membership in players %}
+  <li>{{ membership.player.username }}</li>
+  {% empty %}
+  <li>No players in this team yet.</li>
+  {% endfor %}
+</ul>
 {% endblock %}

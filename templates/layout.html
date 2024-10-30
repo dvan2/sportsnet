@@ -63,6 +63,10 @@
       </div>
     </nav>
 
-    <div class="body">{% block body %} {% endblock %}</div>
+    <div class="body">
+      {% if messages %} {% for message in messages %}
+      <div>{{ message }}</div>
+      {% endfor %} {% endif %} {% block body %} {% endblock %}
+    </div>
   </body>
 </html>

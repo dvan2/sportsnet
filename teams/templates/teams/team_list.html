@@ -1,7 +1,4 @@
-{% extends "layout.html" %} {% block body %} {% if messages %} {% for message in
-messages %}
-<div>{{ message }}</div>
-{% endfor %} {% endif %}
+{% extends "layout.html" %} {% block body %}
 <h2>Available Teams</h2>
 <ul>
   {% for team in teams %}
