@@ -51,7 +51,9 @@ def current_team(request):
     membership = get_object_or_404(Membership, player=request.user, status=Membership.APPROVED)
     team= membership.team
 
-    return render(request, "teams/current_team.html", {"team": team})
+    team_members = team.members.filter(status=Membership.APPROVED)
+
+    return render(request, "teams/current_team.html", {"team": team, "team_members": team_members})
 
 @login_required
 def join_team(request, team_id):
