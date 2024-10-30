@@ -9,4 +9,5 @@ urlpatterns = [
     path('pending_requests', views.manage_requests, name="pending_requests"),
     path("approve_request/<int:membership_id>/", views.approve_request, name="approve_request"),
     path("reject_request/<int:membership_id>/", views.reject_request, name="reject_request"),
+    path("current_team/", views.current_team, name="current_team")
 ]

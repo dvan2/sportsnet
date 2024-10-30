@@ -47,6 +47,13 @@ def team_list(request):
     return render(request, "teams/team_list.html", {"teams" : teams})
 
 @login_required
+def current_team(request):
+    membership = get_object_or_404(Membership, player=request.user, status=Membership.APPROVED)
+    team= membership.team
+
+    return render(request, "teams/current_team.html", {"team": team})
+
+@login_required
 def join_team(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     membership, created = Membership.objects.get_or_create(team=team, player=request.user, defaults={"status": Membership.PENDING})

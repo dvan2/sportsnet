@@ -34,7 +34,7 @@
       <a class="navbar-brand" href="{% url 'index' %}">SportsNet</a>
       <div>
         <ul class="navbar-nav mr-auto">
-          {% if role == "coach" %}
+          {% if user_role == "coach" %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'manage_team' %}">Team</a>
           </li>
@@ -43,7 +43,10 @@
               >Pending Members</a
             >
           </li>
-          {% endif %} {% if role == "player" %}
+          {% endif %} {% if user_role == "player" %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'current_team' %}">My Team</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'team_list' %}">Team</a>
           </li>
