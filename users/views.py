@@ -9,10 +9,6 @@ from django.urls import reverse
 
 from users.models import User, Profile
 
-def index(request):
-    role = "Guest" if not request.user.is_authenticated else request.user.profile.role
-    return render(request, "users/index.html", {"role": role})
-
 # Create your views here.
 @csrf_exempt
 def login_view(request):
