@@ -69,6 +69,11 @@ def join_team(request, team_id):
 
 @login_required
 def manage_requests(request):
+    if not Team.objects.filter(coach=request.user).exists():
+        # No team yet
+        messages.error(request, "You need to create a team first.")
+        return redirect('create_team')
+
     coach_team = request.user.team
     pending_requests = coach_team.members.filter(status=Membership.PENDING)
     return render(request, "teams/manage_requests.html", {"pending_requests": pending_requests})

@@ -67,9 +67,17 @@
     </nav>
 
     <div class="body">
-      {% if messages %} {% for message in messages %}
-      <div>{{ message }}</div>
-      {% endfor %} {% endif %} {% block body %} {% endblock %}
+      <div class="container">
+        <!-- prettier-ignore -->
+        {% if messages %} 
+          {% for message in messages %} 
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+        {% else %}
+        <div class="alert alert-success" role="alert">{{ message }}</div>
+        {% endif %} {% endfor %} {% endif %}
+      </div>
+      {% block body %} {% endblock %}
     </div>
   </body>
 </html>
