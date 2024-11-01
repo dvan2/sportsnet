@@ -4,7 +4,8 @@
 <ul>
   {% for member in team_members %}
   <li>{{ member.player.username }}</li>
+  {% empty %}
+  <p>No players in this team yet.</p>
+  {% endfor %}
 </ul>
-{% empty %}
-<p>No players in this team yet.</p>
-{% endfor %} {% endblock %}
+{% endblock %}
