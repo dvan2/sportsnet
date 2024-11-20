@@ -3,6 +3,15 @@
 <ul>
   {% for membership in players %}
   <li>{{ membership.player.username }}</li>
+  <button
+    type="submit"
+    class="btn btn-danger"
+    data-url="{% url 'remove_player' membership.id %}"
+    data-message="Are you sure you want to remove this player?"
+    data-action="open-modal"
+  >
+    Remove
+  </button>
   {% empty %}
   <li>No players in this team yet.</li>
   {% endfor %}

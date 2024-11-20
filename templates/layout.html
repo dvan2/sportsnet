@@ -15,6 +15,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
     <!-- <script src="{% static 'network/index.js' %}"></script> -->
+    <script src="{% static 'sportsnet/index.js' %}"></script>
 
     <!-- Bootstrap links -->
     <link
@@ -86,6 +87,44 @@
         {% endif %} {% endfor %} {% endif %}
       </div>
       {% block body %} {% endblock %}
+    </div>
+
+    <div
+      class="modal fade"
+      id="confirmationModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="deleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete Post</h5>
+          </div>
+          <div class="modal-body">
+            <p id="modal-message">Are you sure?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              id="modal-confirm-cancel"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              id="modal-confirm-btn"
+              data-post-id=""
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

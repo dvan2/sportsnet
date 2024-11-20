@@ -1,3 +1,5 @@
 {% extends "layout.html" %} {% block body %}
 <h1>Hello {{ user_role }}</h1>
-{% include "network/posts.html" %} {% endblock %}
+{% include "network/posts.html" %} {% include "confirmation_modal.html" %}
+<!-- prettier-ignore -->
+{% endblock %}

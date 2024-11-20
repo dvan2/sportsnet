@@ -5,6 +5,8 @@ from django.db.models import Q
 
 from .models import Team, Membership
 
+from django.http import JsonResponse
+
 # Create your views here.
 @login_required
 def manage_team(request):
@@ -94,3 +96,16 @@ def reject_request(request, membership_id):
     membership.save()
     messages.success(request, "Rejected Request")
     return redirect('pending_requests')
+
+@login_required
+def remove_player(request, membership_id):
+    # membership = get_object_or_404(Membership, id=membership_id, team__coach=request.user)
+
+    # membership.delete()
+    print("removed")
+    messages.success(request, "Player has been successfully removed from the team")
+
+
+    # return JsonResponse({'status': 'success', 'message': 'Player has been successfully removed from the team'})
+
+    return redirect('manage_team')
