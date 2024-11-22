@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import Team, Membership
 
 from django.http import JsonResponse
@@ -98,6 +100,7 @@ def reject_request(request, membership_id):
     return redirect('pending_requests')
 
 @login_required
+@csrf_exempt
 def remove_player(request, membership_id):
     # membership = get_object_or_404(Membership, id=membership_id, team__coach=request.user)
 
@@ -106,6 +109,4 @@ def remove_player(request, membership_id):
     messages.success(request, "Player has been successfully removed from the team")
 
 
-    # return JsonResponse({'status': 'success', 'message': 'Player has been successfully removed from the team'})
-
-    return redirect('manage_team')
+    return JsonResponse({'status': 'success', 'message': 'Player has been successfully removed from the team'})

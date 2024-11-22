@@ -34,10 +34,54 @@ document.addEventListener('DOMContentLoaded', function () {
     .getElementById('modal-confirm-btn')
     .addEventListener('click', function () {
       const url = this.getAttribute('data-url');
-      if (url) {
-        window.location.href = url;
-      } else {
-        console.error('No URL set for confirm action.');
-      }
+
+      fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRFToken': getCSRFToken(),
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
+
+      // fetch(url, {
+      //   method: 'DELETE',
+      //   headers: {
+      //     'X-CSRFToken': getCSRFToken(),
+      //   },
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     if (data.status === 'success') {
+      //       console.log(data.message);
+      //       alert(data.message);
+
+      //       const playerElement = document.getElementById(
+      //         'player-' + url.split('/').pop()
+      //       );
+      //       if (playerElement) {
+      //         playerElement.remove();
+      //       }
+
+      //       const modalElement = document.getElementById('deleteModal');
+      //       const bootstrapModal = bootstrap.Modal.getInstance(modalElement);
+      //       bootstrapModal.hide();
+      //     } else {
+      //       alert('Failed to remove player');
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.error('Error:', error);
+      //   });
     });
 });
+
+function getCSRFToken() {
+  const token = document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute('content')
+    .trim();
+  return token;
+}
