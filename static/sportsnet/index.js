@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', function () {
     .getElementById('modal-confirm-btn')
     .addEventListener('click', function () {
       const url = this.getAttribute('data-url');
+      const modalElement = document.getElementById('confirmationModal');
+      const bootstrapModal = bootstrap.Modal.getInstance(modalElement);
+      bootstrapModal.hide();
 
       fetch(url, {
         method: 'DELETE',
@@ -43,38 +46,26 @@ document.addEventListener('DOMContentLoaded', function () {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          if (data.status === 'success') {
+            console.log(data.message);
+            alert(data.message);
+
+            const playerElement = document.getElementById(
+              'player-' + url.split('/').pop()
+            );
+            if (playerElement) {
+              playerElement.classList.add('fade-out');
+            }
+            playerElement.addEventListener('animationend', () => {
+              playerElement.remove();
+            });
+          } else {
+            alert('Failed to remove player');
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
         });
-
-      // fetch(url, {
-      //   method: 'DELETE',
-      //   headers: {
-      //     'X-CSRFToken': getCSRFToken(),
-      //   },
-      // })
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     if (data.status === 'success') {
-      //       console.log(data.message);
-      //       alert(data.message);
-
-      //       const playerElement = document.getElementById(
-      //         'player-' + url.split('/').pop()
-      //       );
-      //       if (playerElement) {
-      //         playerElement.remove();
-      //       }
-
-      //       const modalElement = document.getElementById('deleteModal');
-      //       const bootstrapModal = bootstrap.Modal.getInstance(modalElement);
-      //       bootstrapModal.hide();
-      //     } else {
-      //       alert('Failed to remove player');
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     console.error('Error:', error);
-      //   });
     });
 });
 

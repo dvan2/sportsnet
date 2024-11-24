@@ -118,3 +118,21 @@
 .page-link {
   text-decoration: none;
 }
+
+/* animation */
+.fade-out {
+  animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+}

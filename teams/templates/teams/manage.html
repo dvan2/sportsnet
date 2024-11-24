@@ -1,18 +1,27 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %} {% load static %}
+
+<!-- prettier-ignore -->
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'teams/teams.css' %}" />
+<!-- prettier-ignore -->
+{% endblock %} 
+{% block body %}
 <meta name="csrf-token" content=" {{ csrf_token }}" />
 <h2>{{ team.name }} - Team Members</h2>
 <ul>
   {% for membership in players %}
-  <li>{{ membership.player.username }}</li>
-  <button
-    type="submit"
-    class="btn btn-danger"
-    data-url="{% url 'remove_player' membership.id %}"
-    data-message="Are you sure you want to remove this player?"
-    data-action="open-modal"
-  >
-    Remove
-  </button>
+  <div id="player-{{ membership.id }}">
+    <li>{{ membership.player.username }}</li>
+    <button
+      type="submit"
+      class="btn btn-danger"
+      data-url="{% url 'remove_player' membership.id %}"
+      data-message="Are you sure you want to remove this player?"
+      data-action="open-modal"
+    >
+      Remove
+    </button>
+  </div>
   {% empty %}
   <li>No players in this team yet.</li>
   {% endfor %}
