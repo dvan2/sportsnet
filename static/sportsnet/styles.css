@@ -1,3 +1,8 @@
+.title-header {
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .post {
   border: 1px solid #ddd;
   border-radius: 5px;
